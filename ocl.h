@@ -1,7 +1,12 @@
 #ifndef __OCL_H
 #define __OCL_H
 
+#ifdef __APPLE__
+#include <OpenCl/cl.h>
+#else
 #include <CL/cl.h>
+#endif
+
 #include <stdint.h>
 
 // An OCLDevice structure contains information specific to one device,
