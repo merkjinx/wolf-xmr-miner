@@ -3,7 +3,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#ifdef __APPLE__
+#include <OpenCl/cl.h>
+#else
 #include <CL/cl.h>
+#endif
+
+
+
 #include <time.h>
 #include "minerlog.h"
 #include "miner.h"
