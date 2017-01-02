@@ -108,7 +108,7 @@ void CreateTargetFromDiff(uint32_t *FullTarget, double Diff)
 	}
 }
 
-#ifdef __linux__
+#ifdef __linux__ 
 
 TIME_TYPE MinerGetCurTime(void)
 {
@@ -122,6 +122,18 @@ double SecondsElapsed(TIME_TYPE Start, TIME_TYPE End)
 	double NanosecondsElapsed = 1e9 * (double)(End.tv_sec - Start.tv_sec) + (double)(End.tv_nsec - Start.tv_nsec);
 	return(NanosecondsElapsed * 1e-9);
 }
+#ifdef __APPLE__ //Apple i found that code on linux will work very well with a different gcc compiler
+TIME_TYPE MinerGetCurTime(void)
+{
+	TIME_TYPE CurTime;
+	clock_gettime(CLOCK_REALTIME, &CurTime);
+	return(CurTime);
+}
+
+double SecondsElapsed(TIME_TYPE Start, TIME_TYPE End)
+{
+	double NanosecondsElapsed = 1e9 * (double)(End.tv_sec - Start.tv_sec) + (double)(End.tv_nsec - Start.tv_nsec);
+	return(NanosecondsElapsed * 1e-9);
 
 #else
 
@@ -139,6 +151,14 @@ double SecondsElapsed(TIME_TYPE Start, TIME_TYPE End)
 
 #ifdef __linux__
 
+void Sleep(uint32_t ms)
+{
+	struct timespec t;
+	t.tv_sec = ms / 1000;
+	t.tv_nsec = (ms % 1000) * 1000000;
+	nanosleep(&t, NULL);
+}
+#ifdef __APPLE__
 void Sleep(uint32_t ms)
 {
 	struct timespec t;
