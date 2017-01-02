@@ -6,7 +6,11 @@
 #include <sys/socket.h>
 #include <netdb.h>
 #include <fcntl.h>
-
+#ifdef __APPLE__
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <fcntl.h>
 #else
 
 #include <winsock2.h>
@@ -21,6 +25,8 @@ int NetworkingInit(void)
 {
 	#ifdef __linux__
 	return(0);
+	#ifdef __APPLE__
+	return(0);
 	#else
 	WSADATA data;
 	return(WSAStartup(MAKEWORD(2, 0), &data));
@@ -30,6 +36,8 @@ int NetworkingInit(void)
 void NetworkingShutdown(void)
 {
 	#ifndef __linux__
+	WSACleanup();
+	#ifndef __APPLE__
 	WSACleanup();
 	#endif
 }
@@ -89,7 +97,9 @@ int SetNonBlockingSocket(SOCKET sockfd)
 	
 	int iof = fcntl(sockfd, F_GETFL, 0);
 	fcntl(sockfd, F_SETFL, iof | O_NONBLOCK);
-	
+	#ifdef __APPLE__
+	int iof = fcntl(sockfd, F_GETFL, 0);
+	fcntl(sockfd, F_SETFL, iof | O_NONBLOCK);
 	#else
 	
 	unsigned long int enable = 1;
