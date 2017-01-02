@@ -26,7 +26,8 @@ bool FullTest(const uint32_t *Hash, const uint32_t *FullTarget);
 #ifdef __linux__
 
 #define TIME_TYPE	struct timespec
-
+#ifdef __APPLE__
+#define TIME_TYPE	struct timespec
 #else
 
 #define TIME_TYPE	clock_t
