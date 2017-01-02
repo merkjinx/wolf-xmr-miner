@@ -1,5 +1,5 @@
-CC		= gcc
-LD		= gcc
+CC		= gcc-6
+LD		= gcc-6
 OPT 	= -O2 -s -I/home/wolf/miners/sgminer-builds/sgminer-lin64/include/ -L/home/wolf/miners/sgminer-builds/sgminer-lin64/lib
 CFLAGS 	= -D_POSIX_SOURCE -D_GNU_SOURCE $(OPT) -c -std=c11
 LDFLAGS	= -DPTW32_STATIC_LIB $(OPT)
