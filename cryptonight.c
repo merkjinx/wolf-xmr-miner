@@ -8,6 +8,8 @@
 #include <unistd.h>
 #ifdef __linux__
 #include <sys/mman.h>
+#elfif __APPLE__
+#include <sys/mman.h>
 #endif
 #include "crypto/oaes_lib.h"
 #include "crypto/c_keccak.h"
