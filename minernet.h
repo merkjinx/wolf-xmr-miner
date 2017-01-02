@@ -6,7 +6,10 @@
 typedef int SOCKET;
 #define closesocket close
 #define INVALID_SOCKET	-1
-
+#ifdef __APPLE__
+typedef int SOCKET;
+#define closesocket close
+#define INVALID_SOCKET	-1
 #endif
 
 int ConnectToPool(char *URL, char *Port);
