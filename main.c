@@ -17,16 +17,27 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <sched.h>
+#ifdef __APPLE__ //kind of messey here ;(
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <sched.h>
 
 #else
-
 #include <winsock2.h>
 #undef __cpuid
-
+#endif
+//Mac or linux, windows
+#ifdef __APPLE__
+#include <OpenCl/cl.h>
+#else
+#include <CL/cl.h>
 #endif
 
-#include <CL/cl.h>
-
+//Import other Headers
 #include "cryptonight.h"
 #include "minerutils.h"
 #include "minerlog.h"
